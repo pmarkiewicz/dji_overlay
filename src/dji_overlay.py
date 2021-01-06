@@ -62,9 +62,11 @@ def run_generate():
     if args.log:
         file_exists(args.log)
 
+    if args.log_offset and not args.log:
+        print('log-offset ignored as no log file specified')
+        
     if not args.out:
         args.out = add_to_filename(args.video, '-out')
-
 
     if args.temp:
         folder_exists(args.temp)

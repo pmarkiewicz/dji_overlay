@@ -120,9 +120,51 @@ class AllImagesGenerator(ImageGenerator):
         with open(fn, 'w') as f:
             f.writelines(script)
 
+    def create_windows_script(self, cmd_resize, cmd_overlay, resized_file):
+        script = f'''
+{cmd_resize}
+
+{cmd_overlay}
+echo cleanup
+del ????.png
+if exist "{resized_file}" del {resized_file}
+        '''
+
+        with open(f'{self.temp_path}/ff.cmd', 'w') as f:
+            f.write(script)
+
+    def create_linux_script(self, cmd_resize, cmd_overlay, resized_file):
+        script = f'''
+            {cmd_resize}
+            
+            {cmd_overlay}
+            echo "cleanup"
+            rm ????.png
+            if test -f "{resized_file}"; then
+            rm {resized_file}
+            fi
+        '''
+
+        with open(f'{self.temp_path}/ff.sh', 'w') as f:
+            f.write(script)
+
+    def create_osx_script(self, cmd_resize, cmd_overlay, resized_file):
+        script = f'''
+            {cmd_resize}
+            
+            {cmd_overlay}
+            echo "cleanup"
+            rm ????.png
+            if test -f "{resized_file}"; then
+            rm {resized_file}
+            fi
+        '''
+
+        with open(f'{self.temp_path}/ff.sh', 'w') as f:
+            f.write(script)
+
+
     def write_cmd(self, no_of_images: int, resized_file: str, cplx_script: str) -> None:
-        # TODO: change shell cmd to multiline string
-        # TODO: make shell per OS
         inputs = ['-i {:04d}.png'.format(i) for i in range(0, no_of_images + 1)]
         input_files = ' '.join(inputs)
 
@@ -141,13 +183,15 @@ class AllImagesGenerator(ImageGenerator):
         out_file = self.out_file.replace('/', os.path.sep)
 
         cmd_overlay = f'{ffmpeg_path} -y -thread_queue_size 1024 -i {in_file} {input_files} -filter_complex_script {cplx_script} {ffmpeg_output_opt} {out_file}\n'
-        with open(f'{self.temp_path}/ff.cmd', 'w') as f:
-            f.write(cmd_resize)
-            f.write('\r\n')
-            f.write(cmd_overlay)
-            f.write('cleanup \r\n')
-            f.write('del ????.png\r\n')
-            f.write(f'del {resized_file}\r\n')
+
+        if sys.platform.startswith('linux'):
+            self.create_linux_script(cmd_resize, cmd_overlay, resized_file)
+        elif sys.platform.startswith('darwin'):
+            self.create_osx_script(cmd_resize, cmd_overlay, resized_file)
+        elif sys.platform.startswith('win32'):
+            self.create_windows_script(cmd_resize, cmd_overlay, resized_file)
+        else:
+            print('Unknown OS, no script generated')
 
 
     def generate(self) -> bool:
