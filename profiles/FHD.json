@@ -1,0 +1,221 @@
+{
+    "profile": {
+        "resolution": "1920x1080",
+        "resize": false
+    },
+
+    "ffmpeg_setting": {
+        "ffmpeg": "c:\\ffmpeg\\ffmpeg",
+        "ffmpeg_opt": "",
+        "ffmpeg_output_opt": "-c:v libx264 -preset slow -crf 12 -tune film",
+        "resize_opt": "-c:v libx264 -preset slow -crf 12 -tune film -vf scale=2704x1520:flags=lanczos+full_chroma_inp"
+    },
+
+    "global_settings": {
+        "border_color": "#000000",
+        "red_color": "#FF0000",
+        "yellow_color": "#FFFF00",
+        "green_color": "#00FF00",
+        "empty_color": "#FFFFFF",
+        "text_color": "#000000",
+        "text_outline_color": "#808080",
+
+        "label_font": "arial.ttf",
+        "label_font_size": 16,
+        "value_font": "verdana.ttf",
+        "value_font_size": 16,
+
+        "name": "",
+        "fmt": "2.1f"
+
+    },
+
+    "chart_settings": {
+        "Watermark": {
+            "resize": false
+        },
+        "TChart": {
+            "text_color": "#010101",
+            "unit": ""
+        },
+        "DateTimeChart": {
+            "fmt": "%y-%m-%d %H:%M:%S",
+            "value_name": "DateTime"
+        },
+        "GPSChart": {
+            "text_color": "#010101",
+            "one_line": true,
+            "h_dist": 5,
+            "value_name": "GPS"
+        },
+        "VChart": {
+            "bar_w": 30, 
+            "bar_h": 10, 
+            "bar_space": 3, 
+            "border_space": 2, 
+            "label_space": 3,
+            "border_color": "#000000",
+            "red_color": "#FF0011",
+            "reversed": false,
+            "min_value": 0
+        },
+        "HChart": {
+            "bar_w": 30, 
+            "bar_h": 10, 
+            "bar_space": 3, 
+            "border_space": 2, 
+            "label_space": 3,
+            "border_color": "#808080",
+            "red_color": "#FF0000",
+            "yellow_color": "#FFFF00",
+            "green_color": "#00FF00",
+            "empty_color": "#FFFFFF",
+            "text_color": "#000000",
+            "reversed": false,
+            "min_value": 0
+        }
+    },
+
+    "display": [
+        {
+            "type": "Watermark",
+            "file_path": "logo.png",
+            "x": 1850, 
+            "y": 1000, 
+            "width": 50,
+            "height": 40
+        },
+        {
+            "type": "VChart",
+            "name": "bitrate",
+            "no_of_bars": 10,
+            "color_range_h": 25, 
+            "color_range_l": 15, 
+            "max_value": 50.8, 
+            "bar_h": 2, 
+            "bar_space": 2,
+            "x": 50, 
+            "y": 10, 
+            "value_name": "bitrate"
+        },
+        {
+            "type": "VChart",
+            "name": "signal", 
+            "no_of_bars": 4, 
+            "color_range_h": 3, 
+            "color_range_l": 2, 
+            "max_value": 4, 
+            "bar_space": 2, 
+            "fmt": "1d",
+            "x": 100, 
+            "y": 10, 
+            "value_name": "signal"
+        },
+        {
+            "type": "HChart",
+            "name": "bat", 
+            "no_of_bars": 10, 
+            "color_range_h": 22.8, 
+            "color_range_l": 21.0, 
+            "min_value": 18.0, 
+            "max_value": 25.8, 
+            "bar_space": 2,
+            "x": 50, 
+            "y": 850, 
+            "value_name": "uavBat"
+        },
+        {
+            "type": "VChart",
+            "name": "delay", 
+            "no_of_bars": 4, 
+            "color_range_h": 38, 
+            "color_range_l": 32, 
+            "min_value": 20, 
+            "max_value": 50, 
+            "bar_space": 2, 
+            "fmt": "2d", 
+            "reversed": true,
+            "x": 150, 
+            "y": 10, 
+            "value_name": "delay"
+        },
+        {
+            "type": "VChart",
+            "name": "thr", 
+            "no_of_bars": 20, 
+            "color_range_h": 0, 
+            "color_range_l": 100, 
+            "min_value": 0, 
+            "max_value": 100, 
+            "bar_space": 1, 
+            "bar_h": 1, 
+            "bar_w": 5, 
+            "fmt": "d",
+            "x": 50, 
+            "y": 100, 
+            "value_name": "Thr(%)"
+        },
+        {
+            "type": "TChart",
+            "name": "Alt:", 
+            "unit": "m",
+            "x": 250, 
+            "y": 10, 
+            "value_name": "Alt(m)"
+        },
+        {
+            "type": "TChart",
+            "name": "SAT:",
+            "x": 350, 
+            "y": 10, 
+            "value_name": "Sats"
+        },
+        {
+            "type": "TChart",
+            "name": "", 
+            "unit": "A",
+            "x": 450, 
+            "y": 10, 
+            "value_name": "Curr(A)"
+        },
+        {
+            "type": "TChart",
+            "name": "Th", 
+            "unit": "%",
+            "x": 550, 
+            "y": 10, 
+            "value_name": "Thr(%)"
+        },
+        {
+            "type": "TChart",
+            "name": "BR:",
+            "x": 650, 
+            "y": 10, 
+            "value_name": "bitrate"
+        },
+        {
+            "type": "TChart",
+            "name": "D:", 
+            "unit": "ms",
+            "x": 750, 
+            "y": 10, 
+            "value_name": "delay"
+        },
+        {
+            "type": "GPSChart",
+            "font_size": 18,
+            "x": 50, 
+            "y": 500, 
+            "value_name": "GPS"
+        },
+        {
+            "type": "TChart",
+            "name": "H:", 
+            "unit": "m", 
+            "fmt": ".0f",
+            "x": 50, 
+            "y": 600, 
+            "value_name": "distance(m)"
+        }
+    ]
+}

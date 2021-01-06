@@ -1,3 +1,10 @@
+.vscode
+
+# test images
+0000.png
+test.png
+test_ah.png
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
