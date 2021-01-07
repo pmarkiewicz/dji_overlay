@@ -4,6 +4,8 @@ Goal of this project is to replace srt overlay with better looking osd over reco
 
 Project is crossplatform and should run on linux, os x and any other os where python and ffmpeg are available
 
+Here is sample https://www.youtube.com/watch?v=6el4MmVW32s
+
 # Installation
 Install ffmpeg.
 Install python. https://www.python.org/
