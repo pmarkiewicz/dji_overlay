@@ -12,12 +12,12 @@
     },
 
     "global_settings": {
-        "border_color": "#000000",
+        "border_color": "#808080",
         "red_color": "#FF0000",
         "yellow_color": "#FFFF00",
         "green_color": "#00FF00",
         "empty_color": "#FFFFFF",
-        "text_color": "#000000",
+        "text_color": "#E0E0E0",
         "text_outline_color": "#808080",
 
         "label_font": "arial.ttf",
@@ -31,22 +31,8 @@
     },
 
     "chart_settings": {
-        "Watermark": {
-            "resize": false
-        },
-        "TChart": {
-            "text_color": "#010101",
-            "unit": ""
-        },
         "DateTimeChart": {
-            "fmt": "%y-%m-%d %H:%M:%S",
-            "value_name": "DateTime"
-        },
-        "GPSChart": {
-            "text_color": "#010101",
-            "one_line": true,
-            "h_dist": 5,
-            "value_name": "GPS"
+            "fmt": "%y-%m-%d %H:%M:%S"
         },
         "VChart": {
             "bar_w": 35, 
@@ -70,7 +56,6 @@
             "yellow_color": "#FFFF00",
             "green_color": "#00FF00",
             "empty_color": "#FFFFFF",
-            "text_color": "#000000",
             "reversed": false,
             "min_value": 0
         }
@@ -140,10 +125,10 @@
             "type": "HChart",
             "name": "bat", 
             "no_of_bars": 10, 
-            "color_range_h": 22.8, 
-            "color_range_l": 21.0, 
-            "min_value": 18.0, 
-            "max_value": 25.8, 
+            "color_range_h": 15.1, 
+            "color_range_l": 14.0, 
+            "min_value": 16.8, 
+            "max_value": 12.0, 
             "bar_space": 2,
             "x": 50, 
             "y": 680, 

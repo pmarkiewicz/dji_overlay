@@ -2,8 +2,34 @@ import math
 
 from PIL import Image, ImageDraw, ImageFont
 
-class Watermark:
+class BaseChart:
+    '''
+    Used to initiate all necessary variables
+    '''
+    def __init__(self):
+        self.border_color = (0, 0, 0)
+        self.red_color = (255, 0, 0)
+        self.yellow_color = (255, 255, 0)
+        self.green_color = (0, 255, 0)
+        self.empty_color = (255, 255, 255)
+        self.text_color = (0, 0, 0)
+        self.text_outline_color = (128, 128, 128)
+
+        self.label_font = "arial.ttf"
+        self.label_font_size = 16
+        self.value_font = "verdana.ttf"
+        self.value_font_size = 16
+
+        self.name = ""
+        self.fmt = "2.1f"
+
+
+class Watermark(BaseChart):
     def __init__(self, cfg):
+        super().__init__()
+
+        self.resize = False
+        
         for k, v in cfg.items():
             self.__setattr__(k, v)
 
@@ -28,15 +54,30 @@ class Watermark:
         if self.watermark:
             img.paste(self.watermark, self.coords)
 
-class TChart:
+class TChart(BaseChart):
     def __init__(self, cfg):
+        super().__init__()
+
+        self.icon = None
+        self.icon_margin = 2
+        self.unit = ''
+
         for k, v in cfg.items():
             self.__setattr__(k, v)
 
+        if self.icon:
+            self.icon_img = Image.open(self.icon)
 
-    def draw(self, canvas: ImageDraw, value, _):
+
+    def draw(self, canvas: ImageDraw, value, img):
         if value is None:
             return
+
+        x_offs = 0
+        if self.icon:
+            img.paste(self.icon_img, (self.x, self.y))
+            size = self.icon_img.size
+            x_offs = size[0] + self.icon_margin
 
         font = ImageFont.truetype(self.value_font, self.value_font_size)
         if self.fmt:
@@ -44,13 +85,17 @@ class TChart:
         else:
             txt = '{} {}{}'.format(self.name, value, self.unit)
 
-        canvas.text((self.x, self.y), txt, font=font, fill=self.text_color) #,  stroke_width=1, stroke_fill=self.empty_color)
+        canvas.text((self.x + x_offs, self.y), txt, font=font, fill=self.text_color) #,  stroke_width=1, stroke_fill=self.empty_color)
 
 
-class DateTimeChart:
+class DateTimeChart(BaseChart):
     def __init__(self, cfg):
+        super().__init__()
+
         for k, v in cfg.items():
             self.__setattr__(k, v)
+
+        self.value_name = "DateTime"
 
     def draw(self, canvas: ImageDraw, value, _):
         if value is None:
@@ -62,11 +107,14 @@ class DateTimeChart:
         canvas.text((self.x, self.y), txt, font=font, fill=self.text_color) #,  stroke_width=1, stroke_fill=self.empty_color)
 
 
-class GPSChart:
+class GPSChart(BaseChart):
     def __init__(self, cfg):
+        super().__init__()
+
         for k, v in cfg.items():
             self.__setattr__(k, v)
 
+        self.value_name = "GPS"
 
     def draw(self, canvas: ImageDraw, value, _):
         if value is None:
@@ -86,8 +134,10 @@ class GPSChart:
 
 
 
-class VChart:
+class VChart(BaseChart):
     def __init__(self, cfg):
+        super().__init__()
+
         for k, v in cfg.items():
             self.__setattr__(k, v)
 
@@ -155,8 +205,10 @@ class VChart:
         img.paste(img2, box=(self.x - txt_w - self.label_space, self.y + math.floor((h - txt_h) / 2)))
 
 
-class HChart:
+class HChart(BaseChart):
     def __init__(self, cfg):
+        super().__init__()
+
         for k, v in cfg.items():
             self.__setattr__(k, v)
 
@@ -211,8 +263,10 @@ class HChart:
         canvas.text((self.x + dx, y2 + 2*self.border_space), txt, font=font, fill=self.text_color) #,  stroke_width=1, stroke_fill=self.empty_color)
 
 
-class SChart:
+class SChart(BaseChart):
     def __init__(self, cfg):
+        super().__init__()
+
         for k, v in cfg.items():
             self.__setattr__(k, v)
         
@@ -246,8 +300,10 @@ class SChart:
         canvas.line((self.x-px0, self.y-py0, self.x-px1, self.y-py1), fill=self.border_color, width=1)
 
 
-class AHChart:
+class AHChart(BaseChart):
     def __init__(self, cfg):
+        super().__init__()
+
         for k, v in cfg.items():
             self.__setattr__(k, v)
 
@@ -472,11 +528,12 @@ if __name__ == '__main__':
     cfg_thr = cfg_txt.copy()
     cfg_thr.update({
             "type": "TChart",
-            "name": "", 
+            "name": "C", 
             "unit": "A",
             "x": 450, 
-            "y": 10, 
-            "value_name": "Curr(A)"
+            "y": 110, 
+            "value_name": "Curr(A)",
+            "icon": "icons/alt-20.png"
     })
 
     thr = TChart(cfg_thr)
@@ -497,6 +554,10 @@ if __name__ == '__main__':
 
     speed = SChart(cfg_speed)
     speed.draw(draw, 100)
+
+    icon = 'icons/alt-20.png'
+    image = Image.open(icon)
+    img.paste(image, (500, 500))
 
     img.save('test.png', 'PNG')
 
@@ -531,4 +592,9 @@ if __name__ == '__main__':
             ah.draw(draw, d_rad1, img)
             ah.draw(draw, d_rad2, img)
 
+
+
     img.save('test_ah.png', 'PNG')
+
+
+

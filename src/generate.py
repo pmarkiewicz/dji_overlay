@@ -49,7 +49,13 @@ class ImageGenerator:
         for item in self.cfg['display']:
             chart_cfg = self.cfg['global_settings'].copy()
             chart_type = item['type']
-            chart_cfg.update(self.cfg['chart_settings'][chart_type])
+
+            try:
+                chart_cfg.update(self.cfg['chart_settings'][chart_type])
+            except KeyError:
+                # chart type data are not specified
+                pass
+
             chart_cfg.update(item)
 
             cls = self.str_to_class(item['type'])
@@ -135,14 +141,14 @@ if exist "{resized_file}" del {resized_file}
 
     def create_linux_script(self, cmd_resize, cmd_overlay, resized_file):
         script = f'''
-            {cmd_resize}
-            
-            {cmd_overlay}
-            echo "cleanup"
-            rm ????.png
-            if test -f "{resized_file}"; then
-            rm {resized_file}
-            fi
+{cmd_resize}
+
+{cmd_overlay}
+echo "cleanup"
+rm ????.png
+if test -f "{resized_file}"; then
+rm {resized_file}
+fi
         '''
 
         with open(f'{self.temp_path}/ff.sh', 'w') as f:
@@ -150,14 +156,14 @@ if exist "{resized_file}" del {resized_file}
 
     def create_osx_script(self, cmd_resize, cmd_overlay, resized_file):
         script = f'''
-            {cmd_resize}
-            
-            {cmd_overlay}
-            echo "cleanup"
-            rm ????.png
-            if test -f "{resized_file}"; then
-            rm {resized_file}
-            fi
+{cmd_resize}
+
+{cmd_overlay}
+echo "cleanup"
+rm ????.png
+if test -f "{resized_file}"; then
+rm {resized_file}
+fi
         '''
 
         with open(f'{self.temp_path}/ff.sh', 'w') as f:

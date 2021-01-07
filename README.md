@@ -5,6 +5,7 @@ Goal of this project is to replace srt overlay with better looking osd over reco
 Project is crossplatform and should run on linux, os x and any other os where python and ffmpeg are available
 
 Here is sample (OpenTX log isn't well sync'ed with video) https://www.youtube.com/watch?v=6el4MmVW32s
+Another example is here (just srt file without any log) https://youtu.be/hEANqb4ohoY  profile applied HD-no_log-4S.json
 
 # Installation
 Install ffmpeg.
@@ -35,3 +36,6 @@ All command line arguments are displayed after -h:
 
 ## How it works
 Base on srt file and optional log from OpenTX radio dji_overlay creates series of png images and with help of ffmpeg overlays them on video file.
+
+## Icons
+Included icons are from bootstrap project https://getbootstrap.com/. They are open source. Number after name is size is pixels.
