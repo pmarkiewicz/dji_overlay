@@ -4,7 +4,8 @@ Goal of this project is to replace srt overlay with better looking osd over reco
 
 Project is crossplatform and should run on linux, os x and any other os where python and ffmpeg are available
 
-Here is sample (OpenTX log isn't well sync'ed with video) https://www.youtube.com/watch?v=6el4MmVW32s
+Here is sample (OpenTX log isn't well sync'ed with video) https://www.youtube.com/watch?v=6el4MmVW32s.
+
 Another example is here (just srt file without any log) https://youtu.be/hEANqb4ohoY  profile applied HD-no_log-4S.json
 
 # Installation
