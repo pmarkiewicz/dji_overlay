@@ -29,7 +29,7 @@ class Watermark(BaseChart):
         super().__init__()
 
         self.resize = False
-        
+
         for k, v in cfg.items():
             self.__setattr__(k, v)
 
@@ -73,17 +73,21 @@ class TChart(BaseChart):
         if value is None:
             return
 
-        x_offs = 0
-        if self.icon:
-            img.paste(self.icon_img, (self.x, self.y))
-            size = self.icon_img.size
-            x_offs = size[0] + self.icon_margin
-
-        font = ImageFont.truetype(self.value_font, self.value_font_size)
         if self.fmt:
             txt = '{} {:{}}{}'.format(self.name, value, self.fmt, self.unit)
         else:
             txt = '{} {}{}'.format(self.name, value, self.unit)
+
+        font = ImageFont.truetype(self.value_font, self.value_font_size)
+
+        x_offs = 0
+        if self.icon:
+            _, txt_h = font.getsize(txt)
+            size = self.icon_img.size
+            x_offs = size[0] + self.icon_margin
+            y_offs = round((txt_h - size[1]) / 2)
+
+            img.paste(self.icon_img, (self.x, self.y + y_offs))
 
         canvas.text((self.x + x_offs, self.y), txt, font=font, fill=self.text_color) #,  stroke_width=1, stroke_fill=self.empty_color)
 
@@ -137,6 +141,8 @@ class GPSChart(BaseChart):
 class VChart(BaseChart):
     def __init__(self, cfg):
         super().__init__()
+
+        self.reversed = False
 
         for k, v in cfg.items():
             self.__setattr__(k, v)
@@ -209,6 +215,8 @@ class HChart(BaseChart):
     def __init__(self, cfg):
         super().__init__()
 
+        self.reversed = False
+        
         for k, v in cfg.items():
             self.__setattr__(k, v)
 
