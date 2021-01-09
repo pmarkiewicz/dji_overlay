@@ -112,12 +112,13 @@ class TestImageGenerator(ImageGenerator):
 
 
 class AllImagesGenerator(ImageGenerator):
-    def __init__(self, cfg_file: str, srt_file: str, log_file: str, in_file: str, out_file: str, temp_path: str, flight_no: int = None, log_offset = 0):
+    def __init__(self, cfg_file: str, srt_file: str, log_file: str, in_file: str, out_file: str, temp_path: str, flight_no: int = None, log_offset:int = 0, keep_temp: bool = False):
         super().__init__(cfg_file, srt_file, log_file, flight_no, log_offset)
 
         self.in_file = in_file
         self.out_file = out_file
         self.temp_path = temp_path
+        self.keep_temp = keep_temp
 
     def write_complex_script(self, script, fn):
         s = script[-1]
@@ -127,17 +128,22 @@ class AllImagesGenerator(ImageGenerator):
             f.writelines(script)
 
     def create_windows_script(self, cmd_resize, cmd_overlay, resized_file):
-        script = f'''
+        script_generate = f'''
 {cmd_resize}
 
 {cmd_overlay}
+
+        '''
+        script_cleanup = '''
 echo cleanup
 del ????.png
 if exist "{resized_file}" del {resized_file}
         '''
 
         with open(f'{self.temp_path}/ff.cmd', 'w') as f:
-            f.write(script)
+            f.write(script_generate)
+            if not self.keep_temp:
+                f.write(script_cleanup)
 
     def create_linux_script(self, cmd_resize, cmd_overlay, resized_file):
         script = f'''
@@ -188,7 +194,7 @@ fi
         cplx_script = cplx_script.replace('/', os.path.sep)
         out_file = self.out_file.replace('/', os.path.sep)
 
-        cmd_overlay = f'{ffmpeg_path} -y -thread_queue_size 1024 -i {in_file} {input_files} -filter_complex_script {cplx_script} {ffmpeg_output_opt} {out_file}\n'
+        cmd_overlay = f'{ffmpeg_path} -y -thread_queue_size 1024 -i {in_file} {input_files} -filter_complex_script {cplx_script} {ffmpeg_output_opt} -an {out_file}\n'
 
         if sys.platform.startswith('linux'):
             self.create_linux_script(cmd_resize, cmd_overlay, resized_file)
