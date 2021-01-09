@@ -48,23 +48,38 @@ def run_generate():
     parser.add_argument('-flight-no', type=int, help='When there are many flights in log file this is log number (starts from 1)')
     parser.add_argument('-log-offset', type=int, default=0, help='Offset of log file in millisecond compared to srt file')
     parser.add_argument('-run',  action='store_true',help='Offset of log file in millisecond compared to srt file')
+    parser.add_argument('-keep-temp',  action='store_true',help='Keep temporary files.')
 
     args = parser.parse_args()
 
-    file_exists(args.video)
-    file_exists(args.profile)
+    if not file_exists(args.video):
+                sys.exit(1)  
 
-    if not args.srt:
-        args.srt = replace_file_ext(args.video, 'srt')
+    if not file_exists(args.profile):
+                sys.exit(1)  
 
-    file_exists(args.srt)
-        
+    if args.srt:
+        srt_path = pathlib.Path(args.srt)
+    else:
+        srt_path = pathlib.Path(args.video)
+        if srt_path.name.startswith('DJIU'):
+            srt_path = srt_path.with_name('DJIG' + srt_path.stem[4:])
+
+        srt_path = srt_path.with_suffix('.srt')
+
+
+    if not srt_path.exists():
+        print(f'File does not exists: {srt_path}')      
+        sys.exit(1)  
+
+    args.srt = str(srt_path)
+
     if args.log:
         file_exists(args.log)
 
     if args.log_offset and not args.log:
         print('log-offset ignored as no log file specified')
-        
+
     if not args.out:
         args.out = add_to_filename(args.video, '-out')
 
@@ -74,7 +89,7 @@ def run_generate():
     else:
         args.temp = add_create_folder(args.out, 'img')    
 
-    gen = AllImagesGenerator(args.profile, args.srt, args.log, args.video, args.out, args.temp, args.flight_no, args.log_offset)
+    gen = AllImagesGenerator(args.profile, args.srt, args.log, args.video, args.out, args.temp, args.flight_no, args.log_offset, args.keep_temp)
     gen.generate()
 
     if args.run:
