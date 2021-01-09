@@ -4,8 +4,9 @@ Goal of this project is to replace srt overlay with better looking osd over reco
 
 Project is crossplatform and should run on linux, os x and any other os where python and ffmpeg are available
 
-Here is sample (OpenTX log isn't well sync'ed with video) https://www.youtube.com/watch?v=6el4MmVW32s
-Another example is here (just srt file without any log) https://youtu.be/hEANqb4ohoY  profile applied HD-no_log-4S.json
+Here is sample (OpenTX log isn't well sync'ed with video) https://www.youtube.com/watch?v=6el4MmVW32s.
+
+Another example is here (just srt file without any log) https://youtu.be/hEANqb4ohoY  with applied profile HD-no_log-4S.json
 
 # Installation
 Install ffmpeg.
@@ -16,9 +17,9 @@ From command line switch to folder where application was unpacked and run
     python -m pip install -r requirements.txt
 
 # How to use
-Simplest usage with predefined profile is to run on Windows
+Simplest usage with predefined profile is to run on Windows (for video from goggles)
 
-    python src\dji_overlay.py -video <path to video mp4> -profile profiles\HD.json -run
+    python src\dji_overlay.py -video <path to video mp4> -profile profiles\HD-no_log-4S -run
 
 For other platforms video generation is automatic but after running
 
