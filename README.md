@@ -8,6 +8,9 @@ Here is sample (OpenTX log isn't well sync'ed with video) https://www.youtube.co
 
 Another example is here (just srt file without any log) https://youtu.be/hEANqb4ohoY  with applied profile HD-no_log-4S.json
 
+Full HD https://www.youtube.com/watch?v=oQVaJWShGdE no log
+
+
 # Installation
 Install ffmpeg.
 Install python. https://www.python.org/
