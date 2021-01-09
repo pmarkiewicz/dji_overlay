@@ -1,7 +1,7 @@
 {
     "profile": {
-        "resolution": "1920x1080",
-        "resize": false
+        "resolution": "2704x1520",
+        "resize": true
     },
 
     "ffmpeg_setting": {
@@ -34,26 +34,23 @@
         "Watermark": {
             "resize": false
         },
+        "DateTimeChart": {
+            "fmt": "%y-%m-%d %H:%M:%S"
+        },
         "VChart": {
-            "bar_w": 45, 
-            "bar_h": 15, 
-            "bar_space": 3, 
-            "border_space": 2, 
-            "label_space": 3,
+            "bar_w": 44, 
+            "bar_h": 16, 
+            "bar_space": 6, 
+            "border_space": 4, 
+            "label_space": 6,
             "min_value": 0
         },
         "HChart": {
-            "bar_w": 30, 
-            "bar_h": 10, 
-            "bar_space": 3, 
-            "border_space": 2, 
-            "label_space": 3,
-            "border_color": "#808080",
-            "red_color": "#FF0000",
-            "yellow_color": "#FFFF00",
-            "green_color": "#00FF00",
-            "empty_color": "#FFFFFF",
-            "text_color": "#000000",
+            "bar_w": 22, 
+            "bar_h": 8, 
+            "bar_space": 6, 
+            "border_space": 4, 
+            "label_space": 6,
             "min_value": 0
         }
     },
@@ -62,21 +59,20 @@
         {
             "type": "Watermark",
             "file_path": "logo.png",
-            "x": 1850, 
-            "y": 1030, 
+            "x": 2600, 
+            "y": 1460, 
             "width": 50,
             "height": 40
         },
         {
             "type": "VChart",
             "name": "bitrate",
-            "no_of_bars": 15,
+            "no_of_bars": 10,
             "color_range_h": 25, 
             "color_range_l": 15, 
             "max_value": 50.8, 
-            "bar_h": 3, 
-            "bar_space": 2,
-            "x": 30, 
+            "bar_h": 4, 
+            "x": 50, 
             "y": 10, 
             "value_name": "bitrate"
         },
@@ -87,26 +83,10 @@
             "color_range_h": 3, 
             "color_range_l": 2, 
             "max_value": 4, 
-            "bar_space": 2, 
             "fmt": "1d",
-            "x": 110, 
+            "x": 150, 
             "y": 10, 
             "value_name": "signal"
-        },
-        {
-            "type": "VChart",
-            "name": "delay", 
-            "no_of_bars": 4, 
-            "color_range_h": 38, 
-            "color_range_l": 32, 
-            "min_value": 20, 
-            "max_value": 50, 
-            "bar_space": 2, 
-            "fmt": "2d", 
-            "reversed": true,
-            "x": 190, 
-            "y": 10, 
-            "value_name": "delay"
         },
         {
             "type": "HChart",
@@ -116,10 +96,31 @@
             "color_range_l": 21.0, 
             "min_value": 18.0, 
             "max_value": 25.8, 
-            "bar_space": 2,
             "x": 50, 
-            "y": 1000, 
+            "y": 1400, 
             "value_name": "uavBat"
+        },
+        {
+            "type": "VChart",
+            "name": "delay", 
+            "no_of_bars": 4, 
+            "color_range_h": 38, 
+            "color_range_l": 32, 
+            "min_value": 20, 
+            "max_value": 50, 
+            "fmt": "2d", 
+            "reversed": true,
+            "x": 250, 
+            "y": 10, 
+            "value_name": "delay"
+        },
+        {
+            "type": "TChart",
+            "icon": "icons/reception-3-40.png",
+            "unit": "ms",
+            "x": 1750, 
+            "y": 20, 
+            "value_name": "delay"
         }
-     ]
+    ]
 }
