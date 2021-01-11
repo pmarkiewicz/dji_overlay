@@ -12,7 +12,7 @@ There are 3 predefined profiles:
 ## profile section
 This defines resolution of generated images and if resize is set to true also resizes video to specified resolution.
 
-## ffmapeg
+## ffmpeg
 This defines options used to run ffmpeg
 * ffmpeg - location of ffmpeg (full path if not on path)
 * ffmpeg_opt - input options for ffmpeg
