@@ -12,7 +12,7 @@ There are 3 predefined profiles:
 ## profile section
 This defines resolution of generated images and if resize is set to true also resizes video to specified resolution.
 
-## ffmapeg
+## ffmpeg
 This defines options used to run ffmpeg
 * ffmpeg - location of ffmpeg (full path if not on path)
 * ffmpeg_opt - input options for ffmpeg
@@ -94,7 +94,7 @@ All colors and in format as in css, hexadecimal color RGB, i.e. #FF0000 is red c
     'delay': int - delay in ms
     'bitrate': float - bitare
     'DateTime': date and time
-    'FM': int - flight mode
+    'FM': int - flight mode - looks like not filled by crossfire
     'GPS': gps location
     'GSpd(kmh)': float - ground speed in km/h
     'GSpd(kts)': float - ground speed in m/h
@@ -155,3 +155,6 @@ All colors and in format as in css, hexadecimal color RGB, i.e. #FF0000 is red c
     'Ele(%)': int - channel in %
     'Thr(%)': int - channel in %
     'Ail(%)': int - channel in %
+    'distance(m)': float - distance from home in m
+    'distance(ft)': float - distance from home in ft
+    
