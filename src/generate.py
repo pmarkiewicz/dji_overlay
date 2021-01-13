@@ -33,7 +33,7 @@ class ImageGenerator:
         self.width = int(resolution[0])
         self.height = int(resolution[1])
 
-        self.bkgnd = (255, 0, 0, 0)
+        self.bkgnd = (128, 128, 128, 0)
 
         self.build_display_list()
 
@@ -67,6 +67,8 @@ class ImageGenerator:
     def create_image(self, data: dict, img_no: int, path: str = '') -> None:
         img = Image.new('RGBA', (self.width, self.height), self.bkgnd)
         canvas = ImageDraw.Draw(img)
+
+        canvas.rectangle((0, 0, self.width, self.height), fill=self.bkgnd)
 
         for item in self.display_list:
             v = item.value_name

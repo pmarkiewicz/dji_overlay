@@ -23,6 +23,10 @@ class BaseChart:
         self.name = ""
         self.fmt = "2.1f"
 
+        self.background_ext = 3
+        self.background_color = (200, 200, 200, 70)
+        self.background_alpha = 128
+
 
 class Watermark(BaseChart):
     def __init__(self, cfg):
@@ -81,12 +85,26 @@ class TChart(BaseChart):
         font = ImageFont.truetype(self.value_font, self.value_font_size)
 
         x_offs = 0
+        y_offs = 0
+        txt_w, txt_h = font.getsize(txt)
+
         if self.icon:
-            _, txt_h = font.getsize(txt)
             size = self.icon_img.size
             x_offs = size[0] + self.icon_margin
             y_offs = round((txt_h - size[1]) / 2)
 
+        x1 = self.x - self.background_ext
+        y1 = self.y - self.background_ext
+        x2 = self.x + x_offs + txt_w + self.background_ext
+        y2 = self.y + txt_h + self.background_ext
+
+        if y_offs < 0:
+            y1 += y_offs
+            y2 -= y_offs
+
+        canvas.rectangle((x1, y1, x2, y2), fill=self.background_color)
+
+        if self.icon:
             img.paste(self.icon_img, (self.x, self.y + y_offs))
 
         canvas.text((self.x + x_offs, self.y), txt, font=font, fill=self.text_color) #,  stroke_width=1, stroke_fill=self.empty_color)
@@ -494,7 +512,7 @@ if __name__ == '__main__':
         "y": 690,
     }
 
-    img = Image.new('RGB', (1280, 720), (128, 128, 128))
+    img = Image.new('RGBA', (1280, 720), (10, 128, 128, 128))
     draw = ImageDraw.Draw(img)
 
     br_val = [50.6, 45.5, 40.5, 23.5, 11.1, 5.4]
@@ -536,7 +554,7 @@ if __name__ == '__main__':
     cfg_thr = cfg_txt.copy()
     cfg_thr.update({
             "type": "TChart",
-            "name": "C", 
+            "name": "Curr", 
             "unit": "A",
             "x": 450, 
             "y": 110, 

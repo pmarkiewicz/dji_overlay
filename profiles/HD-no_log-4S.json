@@ -133,6 +133,15 @@
             "x": 50, 
             "y": 680, 
             "value_name": "uavBat"
+        },
+        {
+            "type": "TChart",
+            "icon": "icons/reception-3-40.png",
+            "unit": "ms",
+            "x": 250, 
+            "y": 20, 
+            "value_name": "delay"
         }
+
      ]
 }
