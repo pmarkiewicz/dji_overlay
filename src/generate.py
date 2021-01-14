@@ -68,8 +68,6 @@ class ImageGenerator:
         img = Image.new('RGBA', (self.width, self.height), self.bkgnd)
         canvas = ImageDraw.Draw(img)
 
-        canvas.rectangle((0, 0, self.width, self.height), fill=self.bkgnd)
-
         for item in self.display_list:
             v = item.value_name
             try:
@@ -102,7 +100,7 @@ class ImageGenerator:
 
 
 class TestImageGenerator(ImageGenerator):
-    def __init__(self, cfg_file: str, srt_file: str, log_file: str, flight_no: int = None, log_offset = 0, bkgnd=(200, 200, 200)):
+    def __init__(self, cfg_file: str, srt_file: str, log_file: str, flight_no: int = None, log_offset = 0, bkgnd=(200, 200, 200, 0)):
         super().__init__(cfg_file, srt_file, log_file, flight_no, log_offset)
         self.bkgnd = bkgnd
 
