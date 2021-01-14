@@ -24,8 +24,8 @@ class BaseChart:
         self.fmt = "2.1f"
 
         self.background_ext = 3
-        self.background_color = (200, 200, 200, 70)
-        self.background_alpha = 128
+        self.background_alpha = 70
+        self.background_color = (200, 200, 200, self.background_alpha)
 
 
 class Watermark(BaseChart):
@@ -70,7 +70,27 @@ class TChart(BaseChart):
             self.__setattr__(k, v)
 
         if self.icon:
-            self.icon_img = Image.open(self.icon)
+            self.load_and_conv_icon()
+
+
+    def load_and_conv_icon(self):
+        icon_img = Image.open(self.icon)
+        icon_img = icon_img.convert('RGBA')
+
+        # it's slow but we have just few icons, and this is called once per icon so overhead is minimal
+        img_src = icon_img.getdata()
+
+        img_dest = []
+        for r, g, b, a in img_src:
+            if a == 0:
+                img_dest.append(self.background_color)
+            else:
+                img_dest.append((r, g, b, a))
+                
+        # update image data
+        icon_img.putdata(img_dest)
+
+        self.icon_img = icon_img
 
 
     def draw(self, canvas: ImageDraw, value, img):
@@ -171,7 +191,7 @@ class VChart(BaseChart):
     def rotated_text(self, text, font, color):
         dx, dy = font.getsize(text)
 
-        img = Image.new('RGBA', (dx, dy), (255, 0, 0, 0))
+        img = Image.new('RGBA', (dx, dy), (0, 0, 0, 0))
         canvas = ImageDraw.Draw(img)
         canvas.text((0, 0), text, font=font, fill=color)
 
